@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <style type="text/css">
+        @font-face {
+            font-family: montserrat;
+            src: url(fonts/montserrat/Montserrat-Regular.otf);
+            font-weight: normal;
+        }
+        @font-face {
+            font-family: montserrat;
+            src: url(fonts/montserrat/Montserrat-Hairline.otf);
+            font-weight: 100;
+        }
+        @font-face {
+            font-family: montserrat;
+            src: url(fonts/montserrat/Montserrat-Light.otf);
+            font-weight: 300;
+        }
+        @font-face {
+            font-family: montserrat;
+            src: url(fonts/montserrat/Montserrat-Bold.otf);
+            font-weight: bold;
+        }
+        @font-face {
+            font-family: montserrat;
+            src: url(fonts/montserrat/Montserrat-Black.otf);
+            font-weight: 900;
+        }
+        @font-face {
+            font-family: roboto;
+            src: url(fonts/roboto/Roboto-Regular.ttf);
+            font-weight: normal;
+        }
+        @font-face {
+            font-family: roboto;
+            src: url(fonts/roboto/Roboto-Thin.ttf);
+            font-weight: 100;
+        }
+        @font-face {
+            font-family: roboto;
+            src: url(fonts/roboto/Roboto-Light.ttf);
+            font-weight: 300;
+        }
+        @font-face {
+            font-family: roboto;
+            src: url(fonts/roboto/Roboto-Bold.ttf);
+            font-weight: bold;
+        }
+        @font-face {
+            font-family: roboto;
+            src: url(fonts/roboto/Roboto-Black.ttf);
+            font-weight: 900;
+        }
+        .ribbon {
+            position: absolute;
+            left: -5px;
+            top: -5px;
+            z-index: 1;
+            overflow: hidden;
+            width: 90px;
+            height: 90px;
+            text-align: right;
+        }
+        .ribbon span {
+            font-size: 10px;
+            font-weight: bold;
+            color: #FFF;
+            text-transform: uppercase;
+            text-align: center;
+            line-height: 36px;
+            transform: rotate(-45deg);
+            -webkit-transform: rotate(-45deg);
+            width: 120px;
+            display: block;
+            background: #79A70A;
+            background: linear-gradient(#00D168 0%, #00B359 100%);
+            position: absolute;
+            top: 13px;
+            left: -29px;
+        }
+        .ribbon span::before {
+            content: "";
+            position: absolute; left: 0px; top: 100%;
+            z-index: -1;
+            border-left: 3px solid #00B359;
+            border-right: 3px solid transparent;
+            border-bottom: 3px solid transparent;
+            border-top: 3px solid #00B359;
+        }
+        .ribbon span::after {
+            content: "";
+            position: absolute; right: 0px; top: 100%;
+            z-index: -1;
+            border-left: 3px solid transparent;
+            border-right: 3px solid #00B359;
+            border-bottom: 3px solid transparent;
+            border-top: 3px solid #00B359;
+        }
+        .callout {
+            height: 20px;
+            width: 64px;
+        }
+        .callout {
+            background-color: transparent;
+            background-image: -moz-linear-gradient(top, #444, #444);
+            position: relative;
+            color: #adb0b3;
+            padding: 2px 6px;
+            border-radius: 3px;
+            min-height: 28px;
+            border: 1px solid #adb0b3;
+        }
+        .callout::before {
+            content: "";
+            width: 0px;
+            border: 0.2em solid transparent;
+            position: absolute;
+        }
+        .callout.right::before {
+            left: -7px;
+            top: 40%;
+            border-right: 4px solid #adb0b3;
+        }
+        footer {
+            background: #303030;
+        }
+
+        /**
+         * Tailwindcss manual override (due to using CDN version)
+         */
+        .text-gray-400 {
+            color: #e0decb94;
+        }
+        .text-gray-600 {
+            color: #6d6c63;
+        }
+        .border-gray-400 {
+            border-color: #e0decb94;
+        }
+        .bg-blue-600 {
+            background: #00a2f3;
+        }
+        .text-blue-600 {
+            color: #00a2f3;
+        }
+        .border-blue-600 {
+            border-color: #00a2f3;
+        }
+        .bg-blue-500 {
+            background: #30b2f3;
+        }
+        .border-blue-500 {
+            border-color: #30b2f3;
+        }
+        .text-blue-500 {
+            color: #30b2f3;
+        }
+        .text-xxs {
+            font-size: .55rem;
+        }
+        .montserrat {
+            font-family: montserrat;
+        }
+        .roboto {
+            font-family: roboto;
+        }
+    </style>
+</head>
+<body class="roboto text-gray-800 relative" onload="render()" onscroll="toggleFloatingNav()">
+    <div id="mobile-menu-overlay" class="hidden fixed bg-black bg-opacity-75 h-full w-full" style="z-index: 2"></div>
+    <!-- Sumo Bar -->
+    <div class="hidden container mx-auto px-6 lg:flex xl:flex justify-between py-3 text-xs px-3 md:px-8 lg:px-8 xl:px-8 items-center relative">
+        <div class="w-full md:w-1/2 lg:w-1/2 xl:w-1/2 flex justify-center md:justify-start lg:justify-start xl:justify-start">
+            <embed class="absolute top-0" style="width:40px; left:24px" src="svg/ribbon.svg" />
+            <span class="z-10 ml-12">Gratis Ebook 9 Cara Cerdas Menggunakan Domain [x]</span>
+        </div>
+        <div class="hidden md:flex lg:flex xl:flex w-full md:w-1/2 lg:w-1/2 xl:w-1/2 justify-center md:justify-end lg:justify-end xl:justify-end items-center mt-2 md:mt-0 lg:mt-0 xl:mt-0">
+            <div class="mr-2">
+                <a class="cursor-pointer hover:text-blue-600">
+                    <span><i class="fas fa-phone-alt mr-1"></i></span>
+                    <span>0274-5305505</span>
+                </a>
+            </div>
+            <div class="mx-2">
+                <a class="cursor-pointer hover:text-blue-600">
+                    <span><i class="fas fa-comments mr-1"></i></span>
+                    <span>Live Chat</span>
+                </a>
+            </div>
+            <div class="ml-2">
+                <a class="cursor-pointer hover:text-blue-600 flex items-center">
+                    <span class="text-xl"><i class="fas fa-user-circle mr-1"></i></span>
+                    <span>Member Area</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <!-- Top Nav -->
+    <div id="top-nav" class="hidden md:block lg:block xl:block top-0 left-0 w-full bg-white z-20">
+        <div class="py-5 border-t border-b px-3 lg:px-0 xl:px-0 relative">
+            <div class="container mx-auto md:px-8 lg:px-8 xl:px-8">
+                <nav class="flex justify-between items-center text-sm">
+                    <div style="width:240px;">
+                        <embed src="images/logo.svg" />
+                    </div>
+                    <div class="hidden lg:block xl:block">
+                        <ul class="flex justify-end space-x-6">
+                            <li><a class="cursor-pointer hover:text-blue-600">Hosting</a></li>
+                            <li><a class="cursor-pointer hover:text-blue-600">Domain</a></li>
+                            <li><a class="cursor-pointer hover:text-blue-600">Server</a></li>
+                            <li><a class="cursor-pointer hover:text-blue-600">Website</a></li>
+                            <li><a class="cursor-pointer hover:text-blue-600">Afiliasi</a></li>
+                            <li><a class="cursor-pointer hover:text-blue-600">Promo</a></li>
+                            <li><a class="cursor-pointer hover:text-blue-600">Pembayaran</a></li>
+                            <li><a class="cursor-pointer hover:text-blue-600">Review</a></li>
+                            <li><a class="cursor-pointer hover:text-blue-600">Kontak</a></li>
+                            <li><a class="cursor-pointer hover:text-blue-600">Blog</a></li>
+                        </ul>
+                    </div>
+                    <div class="lg:hidden xl:hidden">
+                        <a class="mobile-menu-btn cursor-pointer py-2 px-3 rounded border text-xl text-gray-700" onclick="openNavbar()"><span><i class="fas fa-bars"></i></span></a>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <div id="floating-nav" class="fixed lg:hidden xl:hidden top-0 left-0 w-full bg-white z-20">
+        <div class="py-5 border-t border-b px-3 lg:px-0 xl:px-0 relative">
+            <div class="container mx-auto md:px-8 lg:px-8 xl:px-8">
+                <nav class="flex justify-between items-center text-sm">
+                    <div style="width:240px;">
+                        <embed src="images/logo.svg" />
+                    </div>
+                    <div class="hidden lg:block xl:block">
+                        <ul class="flex justify-end space-x-6">
+                            <li><a class="cursor-pointer hover:text-blue-600">Hosting</a></li>
+                            <li><a class="cursor-pointer hover:text-blue-600">Domain</a></li>
+                            <li><a class="cursor-pointer hover:text-blue-600">Server</a></li>
+                            <li><a class="cursor-pointer hover:text-blue-600">Website</a></li>
+                            <li><a class="cursor-pointer hover:text-blue-600">Afiliasi</a></li>
+                            <li><a class="cursor-pointer hover:text-blue-600">Promo</a></li>
+                            <li><a class="cursor-pointer hover:text-blue-600">Pembayaran</a></li>
+                            <li><a class="cursor-pointer hover:text-blue-600">Review</a></li>
+                            <li><a class="cursor-pointer hover:text-blue-600">Kontak</a></li>
+                            <li><a class="cursor-pointer hover:text-blue-600">Blog</a></li>
+                        </ul>
+                    </div>
+                    <div class="lg:hidden xl:hidden">
+                        <a class="mobile-menu-btn cursor-pointer py-2 px-3 rounded border text-xl text-gray-700" onclick="openNavbar()"><span><i class="fas fa-bars"></i></span></a>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <div id="mobile-nav" class="fixed hidden bg-white w-full z-20 mt-5" style="top:50px;">
+        <ul class="flex flex-col justify-end">
+            <li><a class="block border-b border-t px-3 py-2 cursor-pointer hover:text-blue-600">Hosting</a></li>
+            <li><a class="block border-b px-3 py-2 cursor-pointer hover:text-blue-600">Domain</a></li>
+            <li><a class="block border-b px-3 py-2 cursor-pointer hover:text-blue-600">Server</a></li>
+            <li><a class="block border-b px-3 py-2 cursor-pointer hover:text-blue-600">Website</a></li>
+            <li><a class="block border-b px-3 py-2 cursor-pointer hover:text-blue-600">Afiliasi</a></li>
+            <li><a class="block border-b px-3 py-2 cursor-pointer hover:text-blue-600">Promo</a></li>
+            <li><a class="block border-b px-3 py-2 cursor-pointer hover:text-blue-600">Pembayaran</a></li>
+            <li><a class="block border-b px-3 py-2 cursor-pointer hover:text-blue-600">Review</a></li>
+            <li><a class="block border-b px-3 py-2 cursor-pointer hover:text-blue-600">Kontak</a></li>
+            <li><a class="block border-b px-3 py-2 cursor-pointer hover:text-blue-600">Blog</a></li>
+            <li>
+                <a class="block border-b px-3 py-2 cursor-pointer hover:text-blue-600">
+                    <span><i class="fas fa-phone-alt mr-1"></i></span>
+                    <span>0274-5305505</span>
+                </a>
+            </li>
+            <li>
+                <a class="block border-b px-3 py-2 cursor-pointer hover:text-blue-600">
+                    <span><i class="fas fa-comments mr-1"></i></span>
+                    <span>Live Chat</span>
+                </a>
+            </li>
+            <li>
+                <a class="block border-b px-3 py-2 cursor-pointer hover:text-blue-600 flex items-center">
+                    <span class="text-xl"><i class="fas fa-user-circle mr-1"></i></span>
+                    <span>Member Area</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <!-- Top Slider Part -->
+    <div class="pt-20 pb-10 border-b px-5 lg:px-0 xl:px-0">
+        <div class="container mx-auto px-6 md:flex lg:flex xl:flex justify-center items-center">
+            <div class="w-full lg:w-1/2 xl:w-1/2 px-0 lg:px-5 xl:px-5">
+                <h1 class="text-3xl font-bold montserrat">
+                    PHP Hosting
+                </h1>
+                <h2 class="text-3xl montserrat font-light">
+                    Cepat, handal, penuh dengan modul PHP yang Anda butuhkan
+                </h2>
+                <ul class="mt-4 space-y-1">
+                    <li class="flex items-center">
+                        <div class="rounded-full flex items-center justify-center text-white mr-2 text-green-500"><i class="fas fa-check-circle"></i></div>
+                        <div class="montserrat font-light">Solusi PHP untuk performa query yang lebih cepat</div>
+                    </li>
+                    <li class="flex items-center">
+                        <div class="rounded-full flex items-center justify-center text-white mr-2 text-green-500"><i class="fas fa-check-circle"></i></div>
+                        <div class="montserrat font-light">Konsumsi memori yang lebih rendah</div>
+                    </li>
+                    <li class="flex items-center">
+                        <div class="rounded-full flex items-center justify-center text-white mr-2 text-green-500"><i class="fas fa-check-circle"></i></div>
+                        <div class="montserrat font-light">Support PHP 5.3, PHP 5.4, PHP 5.5, PHP 5.6, PHP 7</div>
+                    </li>
+                    <li class="flex items-center">
+                        <div class="rounded-full flex items-center justify-center text-white mr-2 text-green-500"><i class="fas fa-check-circle"></i></div>
+                        <div class="montserrat font-light">Fitur enkripsi IonCube dan Zend Guard Loaders</div>
+                    </li>
+                </ul>
+            </div>
+            <div class="w-full lg:w-1/2 xl:w-1/2 pt-3 lg:pt-0 xl:pt-0">
+                <img style="width: 512px; max-width: 100%;" src="svg/illustration banner PHP hosting-01.svg">
+            </div>
+        </div>
+    </div>
+    <!-- Top Feature -->
+    <div class="container mx-auto px-6 md:flex lg:flex xl:flex justify-center space-y-20 md:space-x-20 lg:space-x-32 xl:space-x-32 items-end pb-20">
+        <div>
+            <div class="w-full flex justify-center py-8">
+                <embed style="width: 200px" src="svg/icon PHP Hosting_zendguard.svg">
+            </div>
+            <div class="w-full text-center py-3 montserrat">
+                PHP Zend Guard Loader
+            </div>
+        </div>
+        <div>
+            <div class="w-full flex justify-center">
+                <embed style="width: 120px" src="svg/icon PHP Hosting_composer.svg">
+            </div>
+            <div class="w-full text-center py-3 montserrat">
+                PHP Composer
+            </div>
+        </div>
+        <div>
+            <div class="w-full flex justify-center py-8">
+                <embed style="width: 200px" src="svg/icon PHP Hosting_ioncube.svg">
+            </div>
+            <div class="w-full text-center py-3 montserrat">
+                PHP ionCube Loader
+            </div>
+        </div>
+    </div>
+    <div class="py-10 px-5 lg:px-0 xl:px-0">
+        <div class="container mx-auto px-6">
+            <h2 class="text-2xl montserrat font-bold text-center">Paket Hosting Singapura yang Tepat</h2>
+            <h3 class="text-2xl montserrat font-light text-center">Diskon 40% + Domain dan SSL Gratis untuk Anda</h3>
+        </div>
+    </div>
+    <!-- Pricing -->
+    <div id="target" class="container mx-auto md:flex md:flex-wrap lg:flex xl:flex justify-center items-start py-10 px-4"></div>
+    <!-- PHP Feature -->
+    <div class="container mx-auto px-6 px-5 lg:px-0 xl:px-0">
+        <h2 class="text-2xl text-center py-8 montserrat font-light">Powerful dengan Limit PHP yang Lebih Besar</h2>
+        <div class="md:flex lg:flex xl:flex justify-center lg:space-x-12 xl:space-x-12">
+            <div class="w-full md:w-1/3 lg:w-1/3 xl:1/3">
+                <div class="flex justify-start items-center pl-5 pr-20 py-1 border-t border-l border-r">
+                    <div class="rounded-full flex items-center justify-center h-4 w-5 text-white mr-12 text-green-500"><i class="fas fa-check-circle"></i></div>
+                    <div class="w-full text-center">max execution time 300s</div>
+                </div>
+                <div class="flex justify-start items-center pl-5 pr-20 py-1 border-t border-l border-r bg-gray-100">
+                    <div class="rounded-full flex items-center justify-center h-4 w-5 text-white mr-12 text-green-500"><i class="fas fa-check-circle"></i></div>
+                    <div class="w-full text-center">max execution time 300s</div>
+                </div>
+                <div class="flex justify-start items-center pl-5 pr-20 py-1 border">
+                    <div class="rounded-full flex items-center justify-center h-4 w-5 text-white mr-12 text-green-500"><i class="fas fa-check-circle"></i></div>
+                    <div class="w-full text-center">php memory limit 1024 MB</div>
+                </div>
+            </div>
+            <div class="w-full md:w-1/3 lg:w-1/3 xl:1/3">
+                <div class="flex justify-start items-center pl-5 pr-20 py-1 border-t border-l border-r">
+                    <div class="rounded-full flex items-center justify-center h-4 w-5 text-white mr-12 text-green-500"><i class="fas fa-check-circle"></i></div>
+                    <div class="w-full text-center">post max size 128 MB</div>
+                </div>
+                <div class="flex justify-start items-center pl-5 pr-20 py-1 border-t border-l border-r bg-gray-100">
+                    <div class="rounded-full flex items-center justify-center h-4 w-5 text-white mr-12 text-green-500"><i class="fas fa-check-circle"></i></div>
+                    <div class="w-full text-center">upload max filesize 128 MB</div>
+                </div>
+                <div class="flex justify-start items-center pl-5 pr-20 py-1 border">
+                    <div class="rounded-full flex items-center justify-center h-4 w-5 text-white mr-12 text-green-500"><i class="fas fa-check-circle"></i></div>
+                    <div class="w-full text-center">max input vars 2500</div>
+                </div>
+            </div>
+        </div>
+        <div class="flex justify-center py-8">
+            <div class="w-20 border-b-4"></div>
+        </div>
+    </div>
+    <div class="container mx-auto px-6 px-5 lg:px-0 xl:px-0">
+        <h2 class="text-2xl text-center pt-8 montserrat font-light">Semua Paket Hosting Sudah Termasuk</h2>
+        <div class="md:flex lg:flex xl:flex flex-wrap justify-center">
+            <div class="text-center px-4 lg:px-12 xl:px-12">
+                <div class="flex justify-center mb-4 mt-16">
+                    <embed style="width: 80px" src="svg/icon PHP Hosting_PHP Semua Versi.svg" />
+                </div>
+                <h4 class="font-bold montserrat">PHP Semua Versi</h4>
+                <p class="text-sm">Pilih mulai dari versi PHP 5.3 s/d PHP 7.<br>Ubah sesuka Anda!</p>
+            </div>
+            <div class="text-center px-4 lg:px-12 xl:px-12">
+                <div class="flex justify-center mb-4 mt-16">
+                    <embed style="width: 80px" src="svg/icon PHP Hosting_My SQL.svg" />
+                </div>
+                <h4 class="font-bold montserrat">MySQL Versi 5.6</h4>
+                <p class="text-sm">Nikmati MySQL versi terbaru, tercepat dan <br>kaya akan fitur.</p>
+            </div>
+            <div class="text-center px-4 lg:px-12 xl:px-12">
+                <div class="flex justify-center mb-4 mt-16">
+                    <embed style="width: 80px" src="svg/icon PHP Hosting_CPanel.svg" />
+                </div>
+                <h4 class="font-bold montserrat">Panel Hosting cPanel</h4>
+                <p class="text-sm">Kelola website dengan panel canggih yang<br>familiar di hati Anda.</p>
+            </div>
+            <div class="text-center px-4 lg:px-12 xl:px-12">
+                <div class="flex justify-center mb-4 mt-16">
+                    <embed style="width: 80px" src="svg/icon PHP Hosting_garansi uptime.svg" />
+                </div>
+                <h4 class="font-bold montserrat">Garansi Uptime 99%</h4>
+                <p class="text-sm">Data center yang mendukung kelangsungan<br>website Anda 24/7.</p>
+            </div>
+            <div class="text-center px-4 lg:px-12 xl:px-12">
+                <div class="flex justify-center mb-4 mt-16">
+                    <embed style="width: 80px" src="svg/icon PHP Hosting_InnoDB.svg" />
+                </div>
+                <h4 class="font-bold montserrat">Database InnoDB Unlimited</h4>
+                <p class="text-sm">Jumlah dan ukuran database yang tumbuh<br>sesuai kebutuhan Anda.</p>
+            </div>
+            <div class="text-center px-4 lg:px-12 xl:px-12">
+                <div class="flex justify-center mb-4 mt-16">
+                    <embed style="width: 80px" src="svg/icon PHP Hosting_My SQL remote.svg" />
+                </div>
+                <h4 class="font-bold montserrat">Wildcard Remote MySQL</h4>
+                <p class="text-sm">Mendukung s/d 25 max_user_connections<br>dan 100 max_connections</p>
+            </div>
+        </div>
+        <div class="flex justify-center py-12">
+            <div class="w-20 border-b-4"></div>
+        </div>
+    </div>
+    <!-- Laravel Part -->
+    <div class="pt-2 border-b px-5 lg:px-0 xl:px-0">
+        <h2 class="text-2xl pb-6 text-center montserrat font-light">
+            Mendukung Penuh Framework Laravel
+        </h2>
+        <div class="container mx-auto px-6 lg:flex xl:flex justify-center items-end space-x-6">
+            <div class="w-full lg:w-1/3 xl:w-1/3">
+                <h3 class="text-base montserrat font-light">
+                    Tak perlu menggunakan dedicated server ataupun VPS yang mahal. Layanan PHP hosting murah kami mendukung penuh framework favorit Anda
+                </h3>
+                <ul class="mt-4 space-y-1">
+                    <li class="flex items-center">
+                        <div class="rounded-full flex items-center justify-center text-white mr-2 text-green-500"><i class="fas fa-check-circle"></i></div>
+                        <div>Install Laravel <b>1 klik</b> dengan Softaculous Installer.</div>
+                    </li>
+                    <li class="flex items-center">
+                        <div class="rounded-full flex items-center justify-center text-white mr-2 text-green-500"><i class="fas fa-check-circle"></i></div>
+                        <div>Mendukung ekstensi <b>PHP MCrypt, phar, mbstring, json dan fileinfo.</b></div>
+                    </li>
+                    <li class="flex items-center">
+                        <div class="rounded-full flex items-center justify-center text-white mr-2 text-green-500"><i class="fas fa-check-circle"></i></div>
+                        <div>Tersedia Composer dan SSH untuk menginstall package pilihan Anda.</div>
+                    </li>
+                </ul>
+                <h5 class="text-xs my-6">
+                    Nb. Composer dan SSH hanya tersedia pada paket Personal dan Bisnis
+                </h5>
+                <div class="pb-12 text-center lg:text-left xl:text-left">
+                    <a class="rounded-full cursor-pointer text-white font-bold bg-blue-600 border px-8 py-2 border border-blue-600 hover:bg-white hover:text-blue-600 montserrat">Pilih Hosting Anda</a>
+                </div>
+            </div>
+            <div class="w-full lg:w-1/3 xl:w-1/3 pt-3 lg:pt-0 xl:pt-0 flex justify-center">
+                <img style="width: 512px; max-width: 100%" src="svg/illustration banner support laravel hosting.svg">
+            </div>
+        </div>
+    </div>
+    <!-- PHP Modules -->
+    <div class="container mx-auto px-6">
+        <h2 class="text-2xl py-8 text-center montserrat font-light">
+            Modul Lengkap untuk Menjalankan Aplikasi PHP Anda
+        </h2>
+        <div class="flex flex-wrap justify-center text-sm">
+            <ul class="px-4 mt-2 w-1/2 md:w-1/4 lg:w-1/5 xl:w-1/5">
+                <li>IcePHP</li>
+                <li>apc</li>
+                <li>apcu</li>
+                <li>apm</li>
+                <li>ares</li>
+                <li>bcmath</li>
+                <li>bcompiler</li>
+                <li>big_int</li>
+                <li>bitset</li>
+                <li>bloomy</li>
+                <li>bz2_filter</li>
+                <li>clamav</li>
+                <li>coin_acceptor</li>
+                <li>crack</li>
+                <li>dba</li>
+            </ul>
+            <ul class="px-4 mt-2 w-1/2 md:w-1/4 lg:w-1/5 xl:w-1/5">
+                <li>http</li>
+                <li>huffman</li>
+                <li>idn</li>
+                <li>igbinary</li>
+                <li>imagick</li>
+                <li>imap</li>
+                <li>include</li>
+                <li>inotify</li>
+                <li>interbase</li>
+                <li>intl</li>
+                <li>ioncube_loader</li>
+                <li>ioncube_loader_4</li>
+                <li>jsmin</li>
+                <li>json</li>
+                <li>ldap</li>
+            </ul>
+            <ul class="px-4 mt-2 w-1/2 md:w-1/4 lg:w-1/5 xl:w-1/5">
+                <li>nd_pdo_mysql</li>
+                <li>oauth</li>
+                <li>oci8</li>
+                <li>odbc</li>
+                <li>opcache</li>
+                <li>pdf</li>
+                <li>pdo</li>
+                <li>pdo_dblib</li>
+                <li>pdo_firebird</li>
+                <li>pdo_mysql</li>
+                <li>pdo_odbc</li>
+                <li>pdo_pgsql</li>
+                <li>pdo_sqlite</li>
+                <li>pgsql</li>
+                <li>phalcon</li>
+            </ul>
+            <ul class="px-4 mt-2 w-1/2 md:w-1/4 lg:w-1/5 xl:w-1/5">
+                <li>stats</li>
+                <li>stem</li>
+                <li>stomp</li>
+                <li>suhosin</li>
+                <li>sybase_ct</li>
+                <li>sysvmsg</li>
+                <li>sysvsem</li>
+                <li>sysvshm</li>
+                <li>tidy</li>
+                <li>timezonedb</li>
+                <li>trader</li>
+                <li>transit</li>
+                <li>uploadprogress</li>
+                <li>uri_template</li>
+                <li>uuid</li>
+            </ul>
+        </div>
+        <div class="text-center py-8">
+            <a class="rounded-full cursor-pointer font-bold border-gray-800 border px-8 py-2 border hover:border-blue-500 hover:text-blue-500 montserrat">Selengkapnya</a>
+        </div>
+    </div>
+    <!-- Support part -->
+    <div class="pt-10 px-5 lg:px-0 xl:px-0">
+        <div class="container mx-auto px-6 lg:flex xl:flex justify-center items-end lg:space-x-12 xl:space-x-12">
+            <div class="w-full lg:w-1/2 xl:w-1/2">
+                <h3 class="text-center lg:text-left xl:text-left text-3xl py-4 montserrat font-light">
+                    Linux Hosting yang Stabil dengan Teknologi LVE
+                </h3>
+                <p class="text-sm">
+                    SuperMicro <b>Intel Xeon 24-Cores</b> server dengan RAM <b>128 GB</b> dan teknologi <b>LVE CloudLinux</b> untuk stabilitas server Anda. Dilengkapi dengan <b>SSD</b> untuk kecepatan <b>MySQL</b> dan caching, Apache load balancer berbasis LiteSpeed Technologies, <b>CageFS</b> security, <b>Raid-10</b> protection dan auto backup untuk keamanan website PHP Anda.
+                </p>
+                <div class="py-12 text-center lg:text-left xl:text-left">
+                    <a class="rounded-full cursor-pointer text-white font-bold bg-blue-600 border px-8 py-2 border border-blue-600 hover:bg-white hover:text-blue-600 montserrat font-light">Pilih Hosting Anda</a>
+                </div>
+            </div>
+            <div class="w-full lg:w-1/2 xl:w-1/2 pt-3 lg:pt-0 xl:pt-0 flex justify-center">
+                <img class="w-full" style="width: 512px; max-width: 100%;" src="images/Image support.png" alt="Incredibly photogenic customer support">
+            </div>
+        </div>
+    </div>
+    <!-- Social Media -->
+    <div class="py-6 border-b px-5 lg:px-0 xl:px-0 bg-gray-200">
+        <div class="container mx-auto px-6 lg:flex xl:flex space-y-4 items-center">
+            <div class="w-full lg:w-1/2 xl:w-1/2 text-sm">
+                Bagikan jika Anda menyukai halaman ini
+            </div>
+            <div class="w-full lg:w-1/2 xl:w-1/2 flex space-x-2">
+                <!-- Could be replaced by 3rd party sharing tools -->
+                <a class="text-blue-900 flex items-center">
+                    <i class="text-3xl mr-1 fab fa-facebook-square"></i>
+                    <div class="hidden md:block lg:block xl:block callout right text-center text-sm">80k</div>
+                </a>
+                <a class="text-blue-400 flex items-center">
+                    <i class="text-3xl mr-1 fab fa-twitter-square"></i>
+                    <div class="hidden md:block lg:block xl:block callout right text-center text-sm">450</div>
+                </a>
+                <a class="text-red-600 flex items-center">
+                    <i class="text-3xl mr-1 fab fa-google-plus-square"></i>
+                    <div class="hidden md:block lg:block xl:block callout right text-center text-sm">1900</div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <!-- Support Banner -->
+    <div class="py-12 px-5 lg:px-0 xl:px-0 bg-blue-600 text-white">
+        <div class="container mx-auto px-6 lg:flex xl:flex justify-between items-center text-3xl">
+            <div class="montserrat">
+                Perlu <b>BANTUAN?</b> Hubungi Kami: <b>0274-5305505</b>
+            </div>
+            <div class="mt-8 lg:mt-0 xl:mt-0">
+                <a class="inline cursor-pointer rounded-full px-8 py-2 lg:flex xl:flex items-center text-white border border-white hover:bg-white hover:text-blue-600 text-xl"><i class="fas fa-comments mr-2"></i> Live Chat</a>
+            </div>
+        </div>
+    </div>
+    <footer class="text-gray-400 text-xs py-16 leading-relaxed">
+        <div class="container mx-auto px-6 md:flex lg:flex xl:flex">
+            <div class="w-full md:w-1/4 lg:w-1/4 xl:w-1/4">
+                <h5 class="pb-5 font-bold">HUBUNGI KAMI</h5>
+                <ul>
+                    <li>0274-5305505</li>
+                    <li>Senin-Minggu</li>
+                    <li>24 Jam Nonstop</li>
+                    <li>&nbsp;</li>
+                    <li>Jl. Selokan Mataram Monjali</li>
+                    <li>Karangjati MT I/304</li>
+                    <li>Sinduadi, Mlati, Sleman</li>
+                    <li>Yogyakarta 55284</li>
+                </ul>
+            </div>
+            <div class="w-full md:w-1/4 lg:w-1/4 xl:w-1/4">
+                <h5 class="pb-5 font-bold">LAYANAN</h5>
+                <ul>
+                    <li><a class="cursor-pointer hover:underline">Domain</a></li>
+                    <li><a class="cursor-pointer hover:underline">Shared Hosting</a></li>
+                    <li><a class="cursor-pointer hover:underline">Cloud VPS Hosting</a></li>
+                    <li><a class="cursor-pointer hover:underline">Managed VPS Hosting</a></li>
+                    <li><a class="cursor-pointer hover:underline">Web Builder</a></li>
+                    <li><a class="cursor-pointer hover:underline">Keamanan SSL / HTTPS</a></li>
+                    <li><a class="cursor-pointer hover:underline">Jasa Pembuatan Website</a></li>
+                    <li><a class="cursor-pointer hover:underline">Program Afiliasi</a></li>
+                </ul>
+            </div>
+            <div class="w-full md:w-1/4 lg:w-1/4 xl:w-1/4">
+                <h5 class="pb-5 font-bold">SERVICE HOSTING</h5>
+                <ul>
+                    <li><a class="cursor-pointer hover:underline">Hosting Murah</a></li>
+                    <li><a class="cursor-pointer hover:underline">Hosting Indonesia</a></li>
+                    <li><a class="cursor-pointer hover:underline">Hosting Singapura SG</a></li>
+                    <li><a class="cursor-pointer hover:underline">Hosting PHP</a></li>
+                    <li><a class="cursor-pointer hover:underline">Hosting Wordpress</a></li>
+                    <li><a class="cursor-pointer hover:underline">Hosting Laravel</a></li>
+                </ul>
+            </div>
+            <div class="w-full md:w-1/4 lg:w-1/4 xl:w-1/4">
+                <h5 class="pb-5 font-bold">TUTORIAL</h5>
+                <ul>
+                    <li><a class="cursor-pointer hover:underline">Knowledgebase</a></li>
+                    <li><a class="cursor-pointer hover:underline">Blog</a></li>
+                    <li><a class="cursor-pointer hover:underline">Cara Pembayaran</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="container mx-auto px-6 md:flex lg:flex xl:flex mt-8">
+            <div class="w-full md:w-1/4 lg:w-1/4 xl:w-1/4">
+                <h5 class="pb-5 font-bold">TENTANG KAMI</h5>
+                <ul>
+                    <li><a class="cursor-pointer hover:underline">Tim Niagahoster</a></li>
+                    <li><a class="cursor-pointer hover:underline">Karir</a></li>
+                    <li><a class="cursor-pointer hover:underline">Events</a></li>
+                    <li><a class="cursor-pointer hover:underline">Penawaran &amp; Promo Special</a></li>
+                    <li><a class="cursor-pointer hover:underline">Kontak Kami</a></li>
+                </ul>
+            </div>
+            <div class="w-full md:w-1/4 lg:w-1/4 xl:w-1/4">
+                <h5 class="pb-5 font-bold">KENAPA PILIH NIAGAHOSTER?</h5>
+                <ul>
+                    <li><a class="cursor-pointer hover:underline">Support Terbaik</a></li>
+                    <li><a class="cursor-pointer hover:underline">Garansi Harga Termurah</a></li>
+                    <li><a class="cursor-pointer hover:underline">Domain Gratis Selamanya</a></li>
+                    <li><a class="cursor-pointer hover:underline">Datacenter Hosting Terbaik</a></li>
+                    <li><a class="cursor-pointer hover:underline">Review Pelanggan</a></li>
+                </ul>
+            </div>
+            <div class="w-full md:w-1/2 lg:w-1/2 xl:w-1/2">
+                <h5 class="pb-5 font-bold">NEWSLETTER</h5>
+                <div class="w-full md:flex lg:flex xl:flex items-center flex flex-col-reverse md:flex-row lg:flex-row xl:flex-row md:space-x-6 lg:space-x-6 xl:space-x-6">
+                    <div class="w-full md:w-1/2 lg:w-1/2 xl:w-1/2">
+                        <div class="rounded-full bg-white p-2 flex justify-between items-center">
+                            <input class="w-3/4 lg:w-3/5 xl:w-3/5 text-gray-800 outline-none py-1 px-4" placeholder="Email" type="text" name="">
+                            <button class="w-1/4 lg:w-2/5 xl:w-2/5 rounded-full bg-blue-500 text-white border border-blue-500 hover:bg-white hover:text-blue-500 px-3 py-2" type="button">
+                                <span class="block lg:hidden xl:hidden"><i class="fas fa-envelope"></i></span>
+                                <span class="hidden lg:block xl:block">Berlangganan</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="w-full md:w-1/2 lg:w-1/2 xl:w-1/2 flex space-x-2 flex justify-center lg:justify-start xl:justify-start mb-4 md:mb-0 lg:mb-0 xl:mb-0">
+                        <a class="cursor-pointer rounded-full w-12 h-12 border-2 border-gray-400 flex justify-center items-center text-2xl hover:text-blue-500 hover:border-blue-500">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a class="cursor-pointer rounded-full w-12 h-12 border-2 border-gray-400 flex justify-center items-center text-2xl hover:text-blue-500 hover:border-blue-500">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a class="cursor-pointer rounded-full w-12 h-12 border-2 border-gray-400 flex justify-center items-center text-2xl hover:text-blue-500 hover:border-blue-500">
+                            <i class="fab fa-google-plus-g"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="w-full md:w-1/2 lg:w-1/2 xl:w-1/2 mt-2 text-gray-600">
+                    Dapatkan promo dan konten menarik dari penyedia hosting terbaik Anda.
+                </div>
+            </div>
+        </div>
+        <div class="container mx-auto px-6 md:flex lg:flex xl:flex space-x-12 mt-8">
+            <div class="w-full">
+                <h5 class="pb-5 font-bold">PEMBAYARAN</h5>
+                <ul class="flex flex-wrap">
+                    <li class="mt-2 mr-2 border border-gray-400 rounded p-2">BCA</li>
+                    <li class="mt-2 mr-2 border border-gray-400 rounded p-2">Mandiri Clickpay</li>
+                    <li class="mt-2 mr-2 border border-gray-400 rounded p-2">BNI 46</li>
+                    <li class="mt-2 mr-2 border border-gray-400 rounded p-2">VISA</li>
+                    <li class="mt-2 mr-2 border border-gray-400 rounded p-2">MasterCard</li>
+                    <li class="mt-2 mr-2 border border-gray-400 rounded p-2">ATM Bersama</li>
+                    <li class="mt-2 mr-2 border border-gray-400 rounded p-2">PermataBank</li>
+                    <li class="mt-2 mr-2 border border-gray-400 rounded p-2">PRIMA</li>
+                    <li class="mt-2 mr-2 border border-gray-400 rounded p-2">ALTO</li>
+                </ul>
+                <div class="mt-2 text-gray-600">
+                    Aktivasi instant dengan e-Payment. Hosting dan domain langsung aktif!
+                </div>
+            </div>
+        </div>
+        <div class="container mx-auto px-6 md:flex lg:flex xl:flex justify-around items-start mt-4 border-t border-gray-900">
+            <div class="w-full lg:w-2/3 xl:w-2/3 leading-loose pt-4">
+                <p>
+                    Copyright &copy;2016 Niagahoster | Hosting powered by PHP7, CloudLinux, CloudFlare, BitNinja and DC Biznet Technovillage Jakarta
+                </p>
+                <p>
+                    Cloud VPS Murah powered by Webuzo Softaculous, Intel SSD and cloud computing technology
+                </p>
+            </div>
+            <div class="w-full lg:w-1/3 xl:w-1/3 lg:flex xl:flex justify-center lg:justify-end xl:justify-end pt-4">
+                <a class="cursor-pointer hover:underline">Syarat dan Ketentuan</a>&nbsp;|&nbsp;<a class="cursor-pointer hover:underline">Kebijakan Privasi</a>
+            </div>
+        </div>
+    </footer>
+    <script id="pricing" type="x-tmpl-mustache">
+        {{ #pricelist }}
+        <div class="text-center text-sm relative mt-8">
+            {{ #bestSeller }}
+            <div class="ribbon"><span>BEST SELLER!</span></div>
+            {{ /bestSeller }}
+            <div class="text-2xl px-3 py-1 montserrat font-bold border-t border-l border-r
+                {{ #bestSeller }}
+                    {{ bestSellerClass1 }}
+                {{ /bestSeller }}
+            ">
+                {{ name }}
+            </div>
+            <div class="p-3 border-t border-l border-r
+                {{ #bestSeller }}
+                    {{ bestSellerClass1 }}
+                {{ /bestSeller }}
+            ">
+                <div>
+                    <strike>Rp {{ priceBefore }}</strike>
+                </div>
+                <div class="flex montserrat justify-center items-start leading-tight">
+                    <span class="leading-9 mr-1">Rp</span>
+                    <span class="text-5xl leading-tight font-bold">{{ priceAfterBig }}</span>
+                    <span class="font-bold leading-9">.</span>
+                    <span class="font-bold leading-9">{{ priceAfterSmall }}</span>
+                    <span class="leading-9 mr-1">/ bln</span>
+                </div>
+            </div>
+            <div class="p-3 border-t border-l border-r
+                {{ #bestSeller }}
+                    {{ bestSellerClass2 }}
+                {{ /bestSeller }}
+            ">
+                <b>{{ registeredUserFormatted }}</b> Pengguna Terdaftar
+            </div>
+            <div class="p-3 border
+                {{ #bestSeller }}
+                    {{ bestSellerClass3 }}
+                {{ /bestSeller }}
+            ">
+                <ul class="leading-loose">
+                    {{ #features }}
+                    <li>
+                        <b>{{ value }}</b> {{ label }}
+                        {{#starred}}
+                        <div>
+                            <i class="fas fa-star text-blue-500"></i>
+                            <i class="fas fa-star text-blue-500"></i>
+                            <i class="fas fa-star text-blue-500"></i>
+                            <i class="fas fa-star text-blue-500"></i>
+                            <i class="fas fa-star text-blue-500"></i>
+                        </div>
+                        {{/starred}}
+                    </li>
+                    {{ /features }}
+                </ul>
+                <div class="py-8">
+                    <a class="montserrat cursor-pointer rounded-full px-4 py-2 border border-black font-bold hover:bg-black hover:text-white
+                        {{ #bestSeller }}
+                            {{ bestSellerClass4 }}
+                        {{ /bestSeller }}
+                    ">{{ buttonLabel }}</a>
+                </div>
+            </div>
+        </div>
+        {{ /pricelist }}
+    </script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/4.0.1/mustache.min.js"></script>
+    <script type="text/javascript">
+        // get viewport width
+        let vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+
+        // could be loaded from an API Call
+        const data = {
+            "pricelist": [
+                {
+                    "name": "Bayi",
+                    "priceBefore": 19900,
+                    "priceAfter": 14900,
+                    "registeredUser": 938,
+                    "discount": null,
+                    "bestSeller": false,
+                    "features": [
+                        {
+                            "value": "0.5X RESOURCE POWER",
+                            "label": ""
+                        },
+                        {
+                            "value": "500 MB",
+                            "label": "Disk Space"
+                        },
+                        {
+                            "value": "Unlimited",
+                            "label": "Bandwidth"
+                        },
+                        {
+                            "value": "Unlimited",
+                            "label": "Databases"
+                        },
+                        {
+                            "value": "1",
+                            "label": "Domain"
+                        },
+                        {
+                            "value": "Instant",
+                            "label": "Backup"
+                        },
+                        {
+                            "value": "Unlimited SSL",
+                            "label": "Gratis Selamanya"
+                        }
+                    ]
+                },
+                {
+                    "name": "Pelajar",
+                    "priceBefore": 46900,
+                    "priceAfter": 23450,
+                    "registeredUser": 4168,
+                    "discount": null,
+                    "bestSeller": false,
+                    "features": [
+                        {
+                            "value": "1X RESOURCE POWER",
+                            "label": ""
+                        },
+                        {
+                            "value": "Unlimited",
+                            "label": "Disk Space"
+                        },
+                        {
+                            "value": "Unlimited",
+                            "label": "Bandwidth"
+                        },
+                        {
+                            "value": "Unlimited",
+                            "label": "POP3 Email"
+                        },
+                        {
+                            "value": "Unlimited",
+                            "label": "Databases"
+                        },
+                        {
+                            "value": "10",
+                            "label": "Addon Domain"
+                        },
+                        {
+                            "value": "Instant",
+                            "label": "Backup"
+                        },
+                        {
+                            "value": "Domain Gratis",
+                            "label": "Selamanya"
+                        },
+                        {
+                            "value": "Unlimited SSL",
+                            "label": "Gratis Selamanya"
+                        }
+                    ]
+                },
+                {
+                    "name": "Personal",
+                    "priceBefore": 58900,
+                    "priceAfter": 38900,
+                    "registeredUser": 10017,
+                    "discount": null,
+                    "bestSeller": true,
+                    "features": [
+                        {
+                            "value": "2X RESOURCE POWER",
+                            "label": ""
+                        },
+                        {
+                            "value": "Unlimited",
+                            "label": "Disk Space"
+                        },
+                        {
+                            "value": "Unlimited",
+                            "label": "Bandwidth"
+                        },
+                        {
+                            "value": "Unlimited",
+                            "label": "POP3 Email"
+                        },
+                        {
+                            "value": "Unlimited",
+                            "label": "Databases"
+                        },
+                        {
+                            "value": "Unlimited",
+                            "label": "Addon Domain"
+                        },
+                        {
+                            "value": "Instant",
+                            "label": "Backup"
+                        },
+                        {
+                            "value": "Domain Gratis",
+                            "label": "Selamanya"
+                        },
+                        {
+                            "value": "Unlimited SSL",
+                            "label": "Gratis Selamanya"
+                        },
+                        {
+                            "value": "Private",
+                            "label": "Name Server"
+                        },
+                        {
+                            "value": "SpamAssasin",
+                            "label": "Mail Protection"
+                        }
+                    ]
+                },
+                {
+                    "name": "Bisnis",
+                    "priceBefore": 109900,
+                    "priceAfter": 65900,
+                    "registeredUser": 3552,
+                    "discount": "40%",
+                    "bestSeller": false,
+                    "features": [
+                        {
+                            "value": "3X RESOURCE POWER",
+                            "label": ""
+                        },
+                        {
+                            "value": "Unlimited",
+                            "label": "Disk Space"
+                        },
+                        {
+                            "value": "Unlimited",
+                            "label": "Bandwidth"
+                        },
+                        {
+                            "value": "Unlimited",
+                            "label": "POP3 Email"
+                        },
+                        {
+                            "value": "Unlimited",
+                            "label": "Databases"
+                        },
+                        {
+                            "value": "Unlimited",
+                            "label": "Addon Domain"
+                        },
+                        {
+                            "value": "Magic Auto",
+                            "label": "Backup & Restore"
+                        },
+                        {
+                            "value": "Domain Gratis",
+                            "label": "Selamanya"
+                        },
+                        {
+                            "value": "Unlimited SSL",
+                            "label": "Gratis Selamanya"
+                        },
+                        {
+                            "value": "Private",
+                            "label": "Name Server"
+                        },
+                        {
+                            "value": "Prioritas",
+                            "label": "Layanan Support",
+                            "starred": true
+                        },
+                        {
+                            "value": "SpamExpert",
+                            "label": "Pro Mail Protection"
+                        }
+                    ]
+                }
+            ],
+            "priceAfterBig": function () {
+                return Math.floor(this.priceAfter/1000);
+            },
+            "priceAfterSmall": function () {
+                return this.priceAfter % 1000;
+            },
+            "buttonLabel": function () {
+                return !this.discount ? "Pilih Sekarang" : ("Diskon " + this.discount)
+            },
+            "registeredUserFormatted": function () {
+                return new Intl.NumberFormat(['id']).format(this.registeredUser);
+            },
+            "bestSellerClass1": function () {
+                return "bg-blue-500 text-white border-blue-500";
+            },
+            "bestSellerClass2": function () {
+                return "bg-blue-600 text-white border-blue-600";
+            },
+            "bestSellerClass3": function () {
+                return "border-blue-500";
+            },
+            "bestSellerClass4": function () {
+                return "border-blue-600 bg-blue-600 text-white hover:bg-white hover:text-blue-600";
+            }
+        }
+
+        // render data to template
+        function render() {
+            var template = document.querySelector('#pricing').innerHTML;
+            var rendered = Mustache.render(template, data);
+            document.querySelector('#target').innerHTML = rendered;
+        }
+
+        // hide floating nav if top-nav is in vicinity
+        function toggleFloatingNav() {
+            if (vw > 768) {
+                if (! checkVisible(document.querySelector('#top-nav'))) {
+                    document.querySelector('#floating-nav').style.display = "block";
+                } else {
+                    document.querySelector('#floating-nav').style.display = "none";
+                }
+            } else {
+                document.querySelector('#floating-nav').style.display = "block";
+            }
+        }
+
+        // check if element is visible
+        function checkVisible(elm) {
+            var rect = elm.getBoundingClientRect();
+            var viewHeight = Math.max(document.documentElement.clientHeight, window.innerHeight);
+            return !(rect.bottom < 0 || rect.top - viewHeight >= 0);
+        }
+
+        // mobile menu toggle
+        function openNavbar() {
+            document.querySelector('#mobile-nav').classList.toggle('hidden');
+            document.querySelector('#mobile-menu-overlay').classList.toggle('hidden');
+            document.querySelector('body').classList.toggle('overflow-hidden');
+        }
+    </script>
+</body>
+</html>
